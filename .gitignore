@@ -1,0 +1,14 @@
+# ───────────────────────────────────────────
+# Ignorar entorno virtual (ajusta el nombre si fuera otro)
+ai-agents-env/
+# Ignorar bytecode compilado de Python
+__pycache__/
+*.py[cod]
+# Ignorar metadatos de ambiente de Python
+*.env
+*.venv
+pyvenv.cfg
+# Ignorar carpetas de compilación u otras temporales
+.vscode/
+*.log
+# ───────────────────────────────────────────
