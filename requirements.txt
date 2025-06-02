@@ -1,35 +1,40 @@
 # LLM Frameworks
-langchain==0.1.20
-langchain-openai==0.1.8
-langchain-community==0.0.38
-langchain-experimental==0.0.60
-
-# Vector Stores & Embeddings
-chromadb==0.4.24
-faiss-cpu==1.7.4
+langchain
+langchain-openai
+langchain-community
+langchain-experimental
 
 # Data Processing
-pandas==2.0.3
-numpy==1.24.3
-openpyxl==3.1.2
+pandas
+numpy
+openpyxl
 
 # Web & APIs
-requests==2.31.0
-beautifulsoup4==4.12.2
-fastapi==0.103.1
-uvicorn==0.23.2
+requests
+beautifulsoup4
+fastapi
+uvicorn
 
 # Visualization
-matplotlib==3.7.2
-plotly==5.15.0
-streamlit==1.25.0
+matplotlib
+plotly
+streamlit
+streamlit-chat
 
 # Utilities
-python-dotenv==1.0.0
-pydantic==2.3.0
-rich==13.5.2
+python-dotenv
+pydantic
+rich
 
 # Development
-jupyter==1.0.0
-pytest==7.4.0
-black==23.7.0
+jupyter
+pytest
+black
+
+# Vector Stores & Embeddings
+chromadb
+faiss-cpu
+
+# Dependencias adicionales
+setuptools
+wheel
