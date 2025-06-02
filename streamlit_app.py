@@ -1,6 +1,11 @@
 import streamlit as st
 import sys
 import os
+from dotenv import load_dotenv
+
+
+#cargo las variables de entorno
+load_dotenv()
 
 # Agregar el directorio raíz al path para importar módulos
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -11,7 +16,7 @@ import time
 
 # Configuración de la página
 st.set_page_config(
-    page_title="🤖 MI Agente de IA",
+    page_title=" MI Agente de IA",
     page_icon="🤖",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -100,7 +105,7 @@ def main():
         st.header("⚙️ Configuración")
         
         # Estado de la API Key
-        if Settings.OPENAI_API_KEY and Settings.OPENAI_API_KEY != "tu_api_key_aqui":
+        if Settings.OPENAI_API_KEY and Settings.OPENAI_API_KEY != (os.getenv("OPENAI_API_KEY")):
             st.success("✅ API Key configurada")
             api_status = True
         else:

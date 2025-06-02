@@ -1,65 +1,71 @@
-"""Test para verificar que todo está configurado correctamente"""
 import os
-from config.settings import Settings
-from langchain_openai import ChatOpenAI
-from rich.console import Console
-
-console = Console()
+import sys
 
 def test_environment():
     """Verificar entorno Python"""
-    console.print("[bold]Testing Python Environment...[/bold]")
-    import sys
+    print("\n Testing Python Environment...")
     print(f"Python version: {sys.version}")
+    print(f"Current directory: {os.getcwd()}")
+
+def test_imports():
+    """Test imports basicos"""
+    print("\n Testing Basic Imports...")
     
+    try:
+        import dotenv
+        print("OK python-dotenv installed")
+    except ImportError:
+        print("ERROR python-dotenv not installed")
+        
+    try:
+        from config.settings import Settings
+        print("OK Settings imported successfully")
+    except ImportError as e:
+        print(f"ERROR Settings import failed: {e}")
+
 def test_api_keys():
     """Verificar API keys"""
-    console.print("[bold]Testing API Keys...[/bold]")
+    print("\n Testing API Keys...")
     
-    if Settings.OPENAI_API_KEY:
-        console.print("✅ OpenAI API Key found")
+    if os.path.exists('.env'):
+        print("✅ .env file exists")
+        
+        try:
+            from config.settings import Settings
+            if Settings.OPENAI_API_KEY and Settings.OPENAI_API_KEY != "tu_api_key_aqui":
+                print("✅ OpenAI API Key found")
+            else:
+                print("⚠️ WARNING OpenAI API Key not configured properly")
+        except Exception as e:
+            print(f"❌ ERROR reading settings: {e}")
     else:
-        console.print("❌ OpenAI API Key missing")
-        
-def test_openai_connection():
-    """Test conexión con OpenAI"""
-    console.print("[bold]Testing OpenAI Connection...[/bold]")
-    
-    try:
-        llm = ChatOpenAI(
-            model="gpt-3.5-turbo",  # Usar modelo más barato para test
-            temperature=0
-        )
-        
-        response = llm.invoke("Say 'Hello World' if you can hear me!")
-        console.print(f"✅ OpenAI Response: {response.content}")
-        
-    except Exception as e:
-        console.print(f"❌ OpenAI Error: {str(e)}")
+        print("❌ ERROR .env file not found")
 
-def test_langchain():
-    """Test LangChain básico"""
-    console.print("[bold]Testing LangChain...[/bold]")
-    
+def test_openai_connection():
+    """Test conexión a OpenAI"""
+    print("\n Testing OpenAI Connection...")
     try:
-        from langchain.schema import HumanMessage
-        from langchain_openai import ChatOpenAI
-        
-        console.print("✅ LangChain imports successful")
-        
+        from openai import OpenAI
+        api_key = os.getenv('OPENAI_API_KEY')
+        client = OpenAI(api_key=api_key)
+        response = client.models.list()
+        print("✅ OpenAI connection successful")
     except Exception as e:
-        console.print(f"❌ LangChain Error: {str(e)}")
+        print(f"❌ OpenAI Error: {e}")
 
 def run_all_tests():
     """Ejecutar todos los tests"""
-    console.print("[bold green]🚀 Starting Environment Setup Tests[/bold green]\n")
+    print("Starting Environment Setup Tests")
     
     test_environment()
+    test_imports() 
     test_api_keys()
-    test_langchain()
     test_openai_connection()
     
-    console.print("\n[bold green]✅ Setup tests completed![/bold green]")
+    print("\n✅ Setup tests completed!")
+    print("\nNext steps:")
+    print("1. Configure your OpenAI API key in .env file")
+    print("2. Install dependencies: pip install langchain langchain-openai")
 
 if __name__ == "__main__":
     run_all_tests()
